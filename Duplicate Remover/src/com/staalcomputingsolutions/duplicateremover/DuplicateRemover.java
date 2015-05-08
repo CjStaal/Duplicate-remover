@@ -21,7 +21,7 @@ public class DuplicateRemover {
      *
      */
     public static void main(String[] args0) {
-        if (args0.length > 2) {
+        if (args0.length >= 2) {
             String firstString = args0[0];
             String secondString = "";
 
