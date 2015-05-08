@@ -1,6 +1,8 @@
 # Duplicate-remover
 removes duplicates.
-
+The paramters,
+example : abcd do androids dream of electric sheep?
+output : do anrois rem of electri sheep?
      * The first string will be the characters to be removed (no
      * spaces in between), the rest of the strings are created in to one string,
      * saving the whitespaces.The second string will be the one that gets the
