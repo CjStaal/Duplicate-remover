@@ -56,10 +56,8 @@ public class DuplicateRemover {
         for (int index = 0; index < toBeRemoved.length(); index++) {
             theChar = toBeRemoved.charAt(index);
             firstIndex = theString.indexOf(theChar);
-            if (theString.lastIndexOf(theChar, firstIndex) != -1) {
+            if (theString.lastIndexOf(theChar, firstIndex) != -1) 
                 theString = theString.substring(0, firstIndex + 1) + theString.substring(firstIndex + 1).replaceAll(Character.toString(theChar), "");
-
-            }
         }
         return theString;
     }
