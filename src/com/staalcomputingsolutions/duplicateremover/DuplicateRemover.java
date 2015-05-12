@@ -50,6 +50,7 @@ public class DuplicateRemover {
             testvthree(toBeRemoved, theString.toCharArray());
             testvfour(toBeRemoved, theString.toCharArray());
             testvfive(toBeRemoved.toCharArray(), theString.toCharArray());
+            testvsix(toBeRemoved.toCharArray(), theString.toCharArray());
         }
     }
 
@@ -88,11 +89,19 @@ public class DuplicateRemover {
 
     }
 
+    public static void testvsix(char[] toBeRemoved, char[] theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVSIX(toBeRemoved, theString);
+        }
+
+    }
+
     /**
-     * Takes .0814ms. [Averaged from 1000 runs.]
+     * Takes .0964ms. [Averaged from 1000 runs.]
+     *
      * @param toBeRemoved
      * @param theString
-     * @return 
+     * @return
      */
     public static String removeDuplicateVONE(String toBeRemoved, String theString) {
         int firstIndex;
@@ -108,7 +117,8 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes .016ms. [Averaged from 1000 runs.]
+     * Takes .0152ms. [Averaged from 1000 runs.]
+     *
      * @param toBeDeleted
      * @param theString
      * @return
@@ -146,7 +156,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes .00924ms. [Averaged from 1000 runs.]
+     * Takes .0119ms. [Averaged from 1000 runs.]
      *
      * @param toBeDeleted
      * @param theString
@@ -183,7 +193,8 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes .0089ms. [Averaged from 1000 runs.]
+     * Takes .00719ms. [Averaged from 1000 runs.]
+     *
      * @param toBeDeleted
      * @param theString
      * @return
@@ -215,7 +226,8 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes .00766ms. [Averaged from 1000 runs.]
+     * Takes .00611ms. [Averaged from 1000 runs.]
+     *
      * @param toBeDeleted
      * @param theString
      * @return
@@ -229,6 +241,40 @@ public class DuplicateRemover {
                 currentChar = toBeDeleted[index0];
                 foundFirst = false;
                 for (int index1 = 0; index1 < theString.length; index1++) {
+                    if (theString[index1] == currentChar) {
+                        if (foundFirst) {
+                            if (theString[index1] != currentChar) {
+                                theString[index1 - moveToLeft] = theString[index1];
+                            } else {
+                                moveToLeft++;
+                            }
+                        } else {
+                            foundFirst = true;
+                        }
+                    }
+                }
+            }
+        }
+        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
+    }
+
+    /**
+     * Takes .00468ms. [Averaged from 1000 runs.]
+     *
+     * @param toBeDeleted
+     * @param theString
+     * @return
+     */
+    public static String removeDuplicateVSIX(char[] toBeDeleted, char[] theString) {
+        int moveToLeft = 0;
+        {
+            char currentChar;
+            boolean foundFirst;
+            int stringLength = theString.length;
+            for (int index0 = 0; index0 < toBeDeleted.length; index0++) {
+                currentChar = toBeDeleted[index0];
+                foundFirst = false;
+                for (int index1 = 0; index1 < stringLength; index1++) {
                     if (theString[index1] == currentChar) {
                         if (foundFirst) {
                             if (theString[index1] != currentChar) {
