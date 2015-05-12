@@ -45,13 +45,22 @@ public class DuplicateRemover {
                     theString += " ";
                 }
             }
-            System.out.println(removeDuplicateVONE(toBeRemoved, theString));
-            System.out.println(removeDuplicateVTWO(toBeRemoved, theString));
-            System.out.println(removeDuplicateVTHREE(toBeRemoved, theString.toCharArray()));
-            System.out.println(removeDuplicateVFOUR(toBeRemoved, theString.toCharArray()));
+            testvone(toBeRemoved, theString);
+            testvfour(toBeRemoved.toCharArray(), theString.toCharArray());
         }
     }
 
+    public static void testvone(String toBeRemoved, String theString){
+            for(int x=0; x<1000; x++)
+            System.out.println(removeDuplicateVONE(toBeRemoved, theString));
+        
+    }
+    
+    public static void testvfour(char[] toBeRemoved, char[] theString){
+            for(int x=0; x<1000; x++)
+            System.out.println(removeDuplicateVFOUR(toBeRemoved, theString));
+        
+    }
     public static String removeDuplicateVONE(String toBeRemoved, String theString) {
         int firstIndex;
         char theChar;
@@ -66,7 +75,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes only 25% of the time that v1 takes.
+     * 2.8% of the time v1 takes.
      *
      * @param toBeDeleted
      * @param theString
@@ -105,7 +114,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes only 25% of the time that v1 takes.
+     * 2% of the time v1 takes.
      *
      * @param toBeDeleted
      * @param theString
@@ -142,7 +151,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * Takes only 25% of the time that v1 takes.
+     * .7% of the time v1 takes.
      *
      * @param toBeDeleted
      * @param theString
@@ -155,6 +164,38 @@ public class DuplicateRemover {
             boolean foundFirst;
             for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
                 currentChar = toBeDeleted.charAt(index0);
+                foundFirst = false;
+                for (int index1 = 0; index1 < theString.length; index1++) {
+                    if (theString[index1] == currentChar) {
+                        if (foundFirst) {
+                            if (theString[index1] != currentChar) {
+                                theString[index1 - moveToLeft] = theString[index1];
+                            } else {
+                                moveToLeft++;
+                            }
+                        } else {
+                            foundFirst = true;
+                        }
+                    }
+                }
+            }
+        }
+        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
+    }
+    /**
+     * Takes only 25% of the time that v1 takes.
+     *
+     * @param toBeDeleted
+     * @param theString
+     * @return
+     */
+    public static String removeDuplicateVFOUR(char[] toBeDeleted, char[] theString) {
+        int moveToLeft = 0;
+        {
+            char currentChar;
+            boolean foundFirst;
+            for (int index0 = 0; index0 < toBeDeleted.length; index0++) {
+                currentChar = toBeDeleted[index0];
                 foundFirst = false;
                 for (int index1 = 0; index1 < theString.length; index1++) {
                     if (theString[index1] == currentChar) {
