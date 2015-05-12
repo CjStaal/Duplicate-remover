@@ -46,21 +46,54 @@ public class DuplicateRemover {
                 }
             }
             testvone(toBeRemoved, theString);
-            testvfour(toBeRemoved.toCharArray(), theString.toCharArray());
+            testvtwo(toBeRemoved, theString);
+            testvthree(toBeRemoved, theString.toCharArray());
+            testvfour(toBeRemoved, theString.toCharArray());
+            testvfive(toBeRemoved.toCharArray(), theString.toCharArray());
         }
     }
 
-    public static void testvone(String toBeRemoved, String theString){
-            for(int x=0; x<1000; x++)
-            System.out.println(removeDuplicateVONE(toBeRemoved, theString));
-        
+    public static void testvone(String toBeRemoved, String theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVONE(toBeRemoved, theString);
+        }
+
     }
-    
-    public static void testvfour(char[] toBeRemoved, char[] theString){
-            for(int x=0; x<1000; x++)
-            System.out.println(removeDuplicateVFOUR(toBeRemoved, theString));
-        
+
+    public static void testvtwo(String toBeRemoved, String theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVTWO(toBeRemoved, theString);
+        }
+
     }
+
+    public static void testvthree(String toBeRemoved, char[] theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVTHREE(toBeRemoved, theString);
+        }
+
+    }
+
+    public static void testvfour(String toBeRemoved, char[] theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVFOUR(toBeRemoved, theString);
+        }
+
+    }
+
+    public static void testvfive(char[] toBeRemoved, char[] theString) {
+        for (int x = 0; x < 1000; x++) {
+            removeDuplicateVFIVE(toBeRemoved, theString);
+        }
+
+    }
+
+    /**
+     * Takes .0814ms. [Averaged from 1000 runs.]
+     * @param toBeRemoved
+     * @param theString
+     * @return 
+     */
     public static String removeDuplicateVONE(String toBeRemoved, String theString) {
         int firstIndex;
         char theChar;
@@ -75,8 +108,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * 2.8% of the time v1 takes.
-     *
+     * Takes .016ms. [Averaged from 1000 runs.]
      * @param toBeDeleted
      * @param theString
      * @return
@@ -114,7 +146,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * 2% of the time v1 takes.
+     * Takes .00924ms. [Averaged from 1000 runs.]
      *
      * @param toBeDeleted
      * @param theString
@@ -151,8 +183,7 @@ public class DuplicateRemover {
     }
 
     /**
-     * .7% of the time v1 takes.
-     *
+     * Takes .0089ms. [Averaged from 1000 runs.]
      * @param toBeDeleted
      * @param theString
      * @return
@@ -182,14 +213,14 @@ public class DuplicateRemover {
         }
         return String.copyValueOf(theString, 0, theString.length - moveToLeft);
     }
+
     /**
-     * Takes only 25% of the time that v1 takes.
-     *
+     * Takes .00766ms. [Averaged from 1000 runs.]
      * @param toBeDeleted
      * @param theString
      * @return
      */
-    public static String removeDuplicateVFOUR(char[] toBeDeleted, char[] theString) {
+    public static String removeDuplicateVFIVE(char[] toBeDeleted, char[] theString) {
         int moveToLeft = 0;
         {
             char currentChar;
