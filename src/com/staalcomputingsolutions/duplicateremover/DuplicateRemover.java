@@ -46,7 +46,7 @@ public class DuplicateRemover {
                 }
             }
             System.out.println(removeDuplicateVONE(toBeRemoved, theString));
-            //System.out.println(removeDuplicateVTWO(toBeRemoved, theString));
+            System.out.println(removeDuplicateVTWO(toBeRemoved, theString));
         }
     }
 
@@ -70,19 +70,19 @@ public class DuplicateRemover {
      * @param theString
      * @return 
      */
-    public static String removeDuplicateVTWO(String toBeDeleted, String theString) {
+    public static String removeDuplicateVTWO(String toBeDeleted, String theStringString) {
 
         char currentChar;
-        char[] theStringCharArray = theString.toCharArray();
+        char[] theString = theStringString.toCharArray();
         boolean foundFirst;
 
         for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
             currentChar = toBeDeleted.charAt(index0);
             foundFirst = false;
-            for (int index1 = 0; index1 < theStringCharArray.length; index1++) {
-                if (theStringCharArray[index1] == currentChar) {
+            for (int index1 = 0; index1 < theString.length; index1++) {
+                if (theString[index1] == currentChar) {
                     if (foundFirst) {
-                        theStringCharArray[index1] = '\0';
+                        theString[index1] = '\0';
                     } else {
                         foundFirst = true;
                     }
@@ -90,9 +90,9 @@ public class DuplicateRemover {
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (int index2 = 0; index2 < theStringCharArray.length; index2++) {
-            if (theStringCharArray[index2] != '\0') {
-                sb.append(theStringCharArray[index2]);
+        for (int index2 = 0; index2 < theString.length; index2++) {
+            if (theString[index2] != '\0') {
+                sb.append(theString[index2]);
             }
         }
         return sb.toString();
