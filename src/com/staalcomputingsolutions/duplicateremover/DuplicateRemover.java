@@ -16,6 +16,9 @@
  */
 package com.staalcomputingsolutions.duplicateremover;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Charles Joseph Staal
@@ -33,26 +36,80 @@ public class DuplicateRemover {
      */
     public static void main(String[] args0) {
         if (args0.length >= 2) {
-            String firstString = args0[0];
-            String secondString = "";
+            String toBeRemoved = args0[0];
+            String theString = "";
 
             for (int x = 1; x < args0.length; x++) {
-                secondString += args0[x];
+                theString += args0[x];
                 if (x + 1 != args0.length) {
-                    secondString += " ";
+                    theString += " ";
                 }
             }
-            int firstIndex;
-            char theChar;
-            for (int index = 0; index < firstString.length(); index++) {
-                theChar = firstString.charAt(index);
-                firstIndex = secondString.indexOf(theChar);
-                if (secondString.lastIndexOf(theChar, firstIndex) != -1) {
-                    secondString = secondString.substring(0, firstIndex + 1) + secondString.substring(firstIndex + 1).replaceAll(Character.toString(theChar), "");
-
-                }
-            }
-            System.out.println(secondString);
+            System.out.println(removeDuplicateVONE(toBeRemoved, theString));
+            System.out.println(removeDuplicateVTWO(toBeRemoved, theString));
         }
+    }
+
+    public static String removeDuplicateVONE(String toBeRemoved, String theString) {
+        int firstIndex;
+        char theChar;
+        for (int index = 0; index < toBeRemoved.length(); index++) {
+            theChar = toBeRemoved.charAt(index);
+            firstIndex = theString.indexOf(theChar);
+            if (theString.lastIndexOf(theChar, firstIndex) != -1) {
+                theString = theString.substring(0, firstIndex + 1) + theString.substring(firstIndex + 1).replaceAll(Character.toString(theChar), "");
+
+            }
+        }
+        return theString;
+    }
+
+    public static String removeDuplicateVTWO(String toBeRemoved, String theString) {
+        char[] newString = new char[theString.length()];
+        List<Integer> indexes = new LinkedList();
+        char currentChar;
+        int index;
+        for (int rsi = 0; rsi < toBeRemoved.length(); rsi++) {
+            currentChar = toBeRemoved.charAt(rsi);
+            for (int tsi = 0; tsi < theString.length() - 1; tsi++) {
+                if (theString.charAt(tsi) == currentChar) {
+                    indexes.add(tsi);
+                }
+            }
+            for (int x = indexes.size() - 1; x > 0; x--) {
+                index = indexes.get(x);
+                newString[index] = theString.charAt(x);
+            }
+            indexes.clear();
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int x = 0; x < newString.length; x++) {
+            if (newString[x] != '\0') {
+                sb.append(newString[x]);
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String removeDuplicateVTHREE(String toBeDeleted, String theString) {
+
+        char currentChar;
+        char[] theStringCharArray = theString.toCharArray();
+        boolean foundFirst;
+        
+        for(int index0 = 0; index0 < toBeDeleted.length(); index0++){
+            currentChar = toBeDeleted.charAt(index0);
+            foundFirst = false;
+            for(int index1 = 0; index1 < theStringCharArray.length; index1++){
+                if(theStringCharArray[index1] == currentChar ){
+                    if(!foundFirst){
+                        theStringCharArray[index1] = '\0';
+                    } else {
+                        foundFirst = true;
+                    }
+                }
+            }
+        }
+        return theStringCharArray.toString();
     }
 }
