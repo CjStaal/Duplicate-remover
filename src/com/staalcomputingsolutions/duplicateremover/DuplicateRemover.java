@@ -47,6 +47,7 @@ public class DuplicateRemover {
             }
             System.out.println(removeDuplicateVONE(toBeRemoved, theString));
             System.out.println(removeDuplicateVTWO(toBeRemoved, theString));
+            System.out.println(removeDuplicateVTHREE(toBeRemoved, theString.toCharArray()));
         }
     }
 
@@ -56,43 +57,86 @@ public class DuplicateRemover {
         for (int index = 0; index < toBeRemoved.length(); index++) {
             theChar = toBeRemoved.charAt(index);
             firstIndex = theString.indexOf(theChar);
-            if (theString.lastIndexOf(theChar, firstIndex) != -1) 
+            if (theString.lastIndexOf(theChar, firstIndex) != -1) {
                 theString = theString.substring(0, firstIndex + 1) + theString.substring(firstIndex + 1).replaceAll(Character.toString(theChar), "");
+            }
         }
         return theString;
     }
-    
+
     /**
      * Takes only 25% of the time that v1 takes.
+     *
      * @param toBeDeleted
      * @param theString
-     * @return 
+     * @return
      */
     public static String removeDuplicateVTWO(String toBeDeleted, String theStringString) {
 
-        char currentChar;
         char[] theString = theStringString.toCharArray();
-        boolean foundFirst;
+        {
+            char currentChar;
+            boolean foundFirst;
 
-        for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
-            currentChar = toBeDeleted.charAt(index0);
-            foundFirst = false;
-            for (int index1 = 0; index1 < theString.length; index1++) {
-                if (theString[index1] == currentChar) {
-                    if (foundFirst) {
-                        theString[index1] = '\0';
-                    } else {
-                        foundFirst = true;
+            for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
+                currentChar = toBeDeleted.charAt(index0);
+                foundFirst = false;
+                for (int index1 = 0; index1 < theString.length; index1++) {
+                    if (theString[index1] == currentChar) {
+                        if (foundFirst) {
+                            theString[index1] = '\0';
+                        } else {
+                            foundFirst = true;
+                        }
                     }
                 }
             }
         }
-        StringBuilder sb = new StringBuilder();
+        int moveToLeft = 0;
         for (int index2 = 0; index2 < theString.length; index2++) {
             if (theString[index2] != '\0') {
-                sb.append(theString[index2]);
+                theString[index2 - moveToLeft] = theString[index2];
+            } else {
+                moveToLeft++;
             }
         }
-        return sb.toString();
+        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
+    }
+
+    /**
+     * Takes only 25% of the time that v1 takes.
+     *
+     * @param toBeDeleted
+     * @param theString
+     * @return
+     */
+    public static String removeDuplicateVTHREE(String toBeDeleted, char[] theString) {
+        {
+            char currentChar;
+            boolean foundFirst;
+
+            for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
+                currentChar = toBeDeleted.charAt(index0);
+                foundFirst = false;
+                for (int index1 = 0; index1 < theString.length; index1++) {
+                    if (theString[index1] == currentChar) {
+                        if (foundFirst) {
+                            theString[index1] = '\0';
+                        } else {
+                            foundFirst = true;
+                        }
+                    }
+                }
+            }
+        }
+        int moveToLeft = 0;
+        for (int index2 = 0; index2 < theString.length; index2++) {
+            if (theString[index2] != '\0') {
+                theString[index2 - moveToLeft] = theString[index2];
+            } else {
+                moveToLeft++;
+            }
+        }
+        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
     }
 }
