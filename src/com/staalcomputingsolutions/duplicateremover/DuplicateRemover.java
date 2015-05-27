@@ -45,12 +45,14 @@ public class DuplicateRemover {
                     theString += " ";
                 }
             }
-            testvone(toBeRemoved, theString);
-            testvtwo(toBeRemoved, theString);
-            testvthree(toBeRemoved, theString.toCharArray());
-            testvfour(toBeRemoved, theString.toCharArray());
-            testvfive(toBeRemoved.toCharArray(), theString.toCharArray());
-            testvsix(toBeRemoved.toCharArray(), theString.toCharArray());
+            /*(testvone(toBeRemoved, theString);
+             testvtwo(toBeRemoved, theString);
+             testvthree(toBeRemoved, theString.toCharArray());
+             testvfour(toBeRemoved, theString.toCharArray());
+             testvfive(toBeRemoved.toCharArray(), theString.toCharArray());
+             testvsix(toBeRemoved.toCharArray(), theString.toCharArray());*/
+            System.out.println(removeDuplicateVTHREE(toBeRemoved, theString.toCharArray()));
+            System.out.println(removeDuplicateVFOUR(toBeRemoved.toCharArray(), theString.toCharArray()));
         }
     }
 
@@ -75,23 +77,9 @@ public class DuplicateRemover {
 
     }
 
-    public static void testvfour(String toBeRemoved, char[] theString) {
+    public static void testvfour(char[] toBeRemoved, char[] theString) {
         for (int x = 0; x < 1000; x++) {
             removeDuplicateVFOUR(toBeRemoved, theString);
-        }
-
-    }
-
-    public static void testvfive(char[] toBeRemoved, char[] theString) {
-        for (int x = 0; x < 1000; x++) {
-            removeDuplicateVFIVE(toBeRemoved, theString);
-        }
-
-    }
-
-    public static void testvsix(char[] toBeRemoved, char[] theString) {
-        for (int x = 0; x < 1000; x++) {
-            removeDuplicateVSIX(toBeRemoved, theString);
         }
 
     }
@@ -191,102 +179,28 @@ public class DuplicateRemover {
         }
         return String.copyValueOf(theString, 0, theString.length - moveToLeft);
     }
-
-    /**
-     * Takes .00719ms. [Averaged from 1000 runs.]
-     *
-     * @param toBeDeleted
-     * @param theString
-     * @return
-     */
-    public static String removeDuplicateVFOUR(String toBeDeleted, char[] theString) {
-        int moveToLeft = 0;
-        {
-            char currentChar;
-            boolean foundFirst;
-            for (int index0 = 0; index0 < toBeDeleted.length(); index0++) {
-                currentChar = toBeDeleted.charAt(index0);
-                foundFirst = false;
-                for (int index1 = 0; index1 < theString.length; index1++) {
-                    if (theString[index1] == currentChar) {
-                        if (foundFirst) {
-                            if (theString[index1] != currentChar) {
-                                theString[index1 - moveToLeft] = theString[index1];
-                            } else {
-                                moveToLeft++;
-                            }
-                        } else {
-                            foundFirst = true;
-                        }
+    
+    public static String removeDuplicateVFOUR(char[] toBeDeleted, char[] theString) {
+        boolean[] visited = new boolean[toBeDeleted.length];
+        for (int index0 = 0; index0 < theString.length; index0++) {
+            for (int index1 = 0; index1 < toBeDeleted.length; index1++) {
+                if (theString[index0] == toBeDeleted[index1]) {
+                    if (visited[index1]) {
+                        theString[index0] = '\0';
+                        break;
+                    } else {
+                        visited[index1] = true;
+                        break;
                     }
                 }
             }
         }
-        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
-    }
-
-    /**
-     * Takes .00611ms. [Averaged from 1000 runs.]
-     *
-     * @param toBeDeleted
-     * @param theString
-     * @return
-     */
-    public static String removeDuplicateVFIVE(char[] toBeDeleted, char[] theString) {
         int moveToLeft = 0;
-        {
-            char currentChar;
-            boolean foundFirst;
-            for (int index0 = 0; index0 < toBeDeleted.length; index0++) {
-                currentChar = toBeDeleted[index0];
-                foundFirst = false;
-                for (int index1 = 0; index1 < theString.length; index1++) {
-                    if (theString[index1] == currentChar) {
-                        if (foundFirst) {
-                            if (theString[index1] != currentChar) {
-                                theString[index1 - moveToLeft] = theString[index1];
-                            } else {
-                                moveToLeft++;
-                            }
-                        } else {
-                            foundFirst = true;
-                        }
-                    }
-                }
-            }
-        }
-        return String.copyValueOf(theString, 0, theString.length - moveToLeft);
-    }
-
-    /**
-     * Takes .00468ms. [Averaged from 1000 runs.]
-     *
-     * @param toBeDeleted
-     * @param theString
-     * @return
-     */
-    public static String removeDuplicateVSIX(char[] toBeDeleted, char[] theString) {
-        int moveToLeft = 0;
-        {
-            char currentChar;
-            boolean foundFirst;
-            int stringLength = theString.length;
-            for (int index0 = 0; index0 < toBeDeleted.length; index0++) {
-                currentChar = toBeDeleted[index0];
-                foundFirst = false;
-                for (int index1 = 0; index1 < stringLength; index1++) {
-                    if (theString[index1] == currentChar) {
-                        if (foundFirst) {
-                            if (theString[index1] != currentChar) {
-                                theString[index1 - moveToLeft] = theString[index1];
-                            } else {
-                                moveToLeft++;
-                            }
-                        } else {
-                            foundFirst = true;
-                        }
-                    }
-                }
+        for (int index2 = 0; index2 < theString.length; index2++) {
+            if (theString[index2] != '\0') {
+                theString[index2 - moveToLeft] = theString[index2];
+            } else {
+                moveToLeft++;
             }
         }
         return String.copyValueOf(theString, 0, theString.length - moveToLeft);
